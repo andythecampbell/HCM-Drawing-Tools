@@ -1,0 +1,14 @@
+<Addin Type="Standard">
+  <!--Created for Autodesk Inventor Version 17.0-->
+  <ClassId>{5f967b11-035a-4d58-999f-b4460c676acf}</ClassId>
+  <ClientId>{5f967b11-035a-4d58-999f-b4460c676acf}</ClientId>
+  <DisplayName>HCMDrawingSymbols</DisplayName>
+  <Description>HCMDrawingSymbols</Description>
+  <Assembly>HCMDrawingSymbols.dll</Assembly>
+  <LoadOnStartUp>1</LoadOnStartUp>
+  <UserUnloadable>1</UserUnloadable>
+  <Hidden>0</Hidden>
+  <SupportedSoftwareVersionGreaterThan>16..</SupportedSoftwareVersionGreaterThan>
+  <DataVersion>1</DataVersion>
+  <UserInterfaceVersion>1</UserInterfaceVersion>
+</Addin>

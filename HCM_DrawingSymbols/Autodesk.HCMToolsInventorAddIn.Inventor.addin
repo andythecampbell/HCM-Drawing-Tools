@@ -1,0 +1,14 @@
+<Addin Type="Standard">
+  <!--Created for Autodesk Inventor Version 17.0-->
+  <ClassId>{63e79712-4c4e-4cbe-8f0f-beec0b7c24b2}</ClassId>
+  <ClientId>{63e79712-4c4e-4cbe-8f0f-beec0b7c24b2}</ClientId>
+  <DisplayName>HCMToolsInventorAddIn</DisplayName>
+  <Description>HCMToolsInventorAddIn</Description>
+  <Assembly>HCMToolsInventorAddIn.dll</Assembly>
+  <LoadOnStartUp>1</LoadOnStartUp>
+  <UserUnloadable>1</UserUnloadable>
+  <Hidden>0</Hidden>
+  <SupportedSoftwareVersionGreaterThan>16..</SupportedSoftwareVersionGreaterThan>
+  <DataVersion>1</DataVersion>
+  <UserInterfaceVersion>1</UserInterfaceVersion>
+</Addin>

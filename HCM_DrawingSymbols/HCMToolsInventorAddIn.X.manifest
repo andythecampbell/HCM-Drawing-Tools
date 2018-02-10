@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="HCMToolsInventorAddIn" version="1.0.0.0"></assemblyIdentity>
+
+  <clrClass clsid="{63e79712-4c4e-4cbe-8f0f-beec0b7c24b2}" progid="HCMToolsInventorAddIn.StandardAddInServer" threadingModel="Both" name="HCMToolsInventorAddIn.StandardAddInServer" runtimeVersion=""></clrClass>
+
+  <file name="HCMToolsInventorAddIn.dll" hashalg="SHA1"></file>
+
+</assembly>
