@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Inventor;
@@ -23,25 +24,26 @@ namespace HCMToolsInventorAddIn
         Inventor.ApplicationEvents appEvents = null;
         //private Inventor.UserInputEvents m_userEvents;
         UserInputEventHandler mUserInputEventHandler;
-        ApplicationEventsHandler appEventsHandler = new ApplicationEventsHandler();
+        ApplicationEventsHandler appEventsHandler;
         TransactionEventsHandler transEventsHandler;
 
 
         //buttons
+        private SyncSymbolsButton syncSymbolsButton;
 
         //combo-boxes
-
         //user interface event
         private UserInterfaceEvents userInterfaceEvents;
 
         //ribbon panels
+
+
 
         //event handler delegates
 
         
         public StandardAddInServer()
         {
-            
 
         }
 
@@ -51,24 +53,69 @@ namespace HCMToolsInventorAddIn
             AddinGlobal.InventorApp = addInSiteObject.Application;
             try
             {
-
                 mUserInputEventHandler = new UserInputEventHandler(AddinGlobal.InventorApp.CommandManager.UserInputEvents);
                 mUserInputEventHandler.Register();
-                appEventsHandler.register();
+                appEventsHandler = new ApplicationEventsHandler(AddinGlobal.InventorApp.ApplicationEvents);
+                appEventsHandler.Register();
                 transEventsHandler = new TransactionEventsHandler(AddinGlobal.InventorApp.TransactionManager.TransactionEvents);
-                transEventsHandler.register();
+                transEventsHandler.Register();
+                
+                GuidAttribute addInCLSID;
+                addInCLSID = (GuidAttribute)GuidAttribute.GetCustomAttribute(typeof(StandardAddInServer), typeof(GuidAttribute));
+                string addInCLSIDString;
+                addInCLSIDString = "{" + addInCLSID.Value + "}";
+                
+                //create buttons
+                syncSymbolsButton = new SyncSymbolsButton("Sync Sketch Symbols", "Autodesk:HCMDrawingSymbols:SyncSymbolsButton",
+                    CommandTypesEnum.kShapeEditCmdType, addInCLSIDString, "Syncs Custom Sketch Symbols With Document Data",
+                    "Sync Drawing Symbols", ButtonDisplayEnum.kDisplayTextInLearningMode);
+
+                if (firstTime == true)
+                {
+                    UserInterfaceManager uiMan = AddinGlobal.InventorApp.UserInterfaceManager;
+                    if (uiMan.InterfaceStyle == InterfaceStyleEnum.kRibbonInterface)
+                    {
+
+                        //Ribbon pRibbon = uiMan.Ribbons["Part"];
+                        //Ribbon aRibbon = uiMan.Ribbons["Assembly"];
+                        
+                        Ribbon dRibbon = uiMan.Ribbons["Drawing"];
+                        //RibbonTab dHCMTab = dRibbon.RibbonTabs.Add("HCM Tools", "HCMCustomTools", addInCLSIDString, "", false, false);
+                        
+                        RibbonTab drawingAnnotateTab = dRibbon.RibbonTabs[2];
+                        AddinGlobal.RibbonPanelId = "{d04e0c45-dec6-4881-bd3f-a7a81b99f307}";
+                        //CommandControls cmdCtrlsDataPart = AddinGlobal.RibbonPanel.CommandControls;
+                        AddinGlobal.RibbonPanelId = "{d04e0c45-dec7-4881-bd3f-a7a81b99f307}";
+                        //CommandControls cmdCtrlsAssembly = AddinGlobal.RibbonPanel.CommandControls;
+                        AddinGlobal.RibbonPanel = drawingAnnotateTab.RibbonPanels[1];//.Add("DrawingTools", "InventorAddinServer.RibbonPanel_" + Guid.NewGuid().ToString(),
+                            //AddinGlobal.RibbonPanelId, String.Empty, false);
+                        CommandControls cmdCtlsDrawing = AddinGlobal.RibbonPanel.CommandControls;
+
+                        cmdCtlsDrawing.AddButton(syncSymbolsButton.ButtonDefinition, true, true, "", false);
+                        
+                    }
+                }
+
             }
             catch (Exception e)
             {
-                MessageBox.Show("Addin Load Error:" + e.ToString());
+                MessageBox.Show("Addin Load Error:" + e.ToString() + e.StackTrace);
             }
         }
 
        
         public void Deactivate()
         {
-            // Release objects.
-            //***** button List release****
+            if (syncSymbolsButton.ButtonDefinition != null) Marshal.ReleaseComObject(syncSymbolsButton.ButtonDefinition);
+            mUserInputEventHandler.Unregister();
+            appEventsHandler.Unregister();
+            transEventsHandler.Unregister();
+          
+            //Marshal.ReleaseComObject(m_inventorApplication);
+            //m_inventorApplication = null;
+
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
 
         }
 

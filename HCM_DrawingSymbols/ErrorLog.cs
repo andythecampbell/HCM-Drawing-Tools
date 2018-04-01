@@ -12,7 +12,7 @@ namespace HCMToolsInventorAddIn
 
     class ErrorLog
     {
-        public static void LogError(Exception Error, Document activeDoc, string transName)
+        public static void LogError(string errorMessage, Document activeDoc, string transName)
         {
             try
             {
@@ -30,14 +30,20 @@ namespace HCMToolsInventorAddIn
                     theLog = new StreamWriter(fullPath, true);
                     theLog.WriteLine(DateTime.Now + "\n" + userInitials + " Error Log\n");
                     theLog.WriteLine(activeDoc.FullDocumentName + " Transaction Name: " + transName + "\n");
-                    theLog.WriteLine(Error.Message + "\n" + Error.StackTrace);
+                    theLog.WriteLine(errorMessage);
                     theLog.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error Writing to Log File\n" + ex.Message + ex.StackTrace);
             }
+        }
+
+        public static void LogError(Exception error, Document activeDoc, string transName)
+        {
+            var message = error.Message + "\n" + error.StackTrace;
+            LogError(message, activeDoc, transName);
         }
     }
 }

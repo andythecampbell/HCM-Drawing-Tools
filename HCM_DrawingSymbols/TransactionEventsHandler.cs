@@ -14,7 +14,8 @@ namespace HCMToolsInventorAddIn
         {
             mEventsObj = obj;
         }
-        public void register()
+
+        public void Register()
         {
             
             //mEventsObj.OnUndo += mEventsObj_OnUndo;
@@ -22,6 +23,17 @@ namespace HCMToolsInventorAddIn
             //mEventsObj.OnCommit += mEventsObj_OnCommit;
             //mEventsObj.OnDelete += mEventsObj_OnDelete;
             //mEventsObj.OnAbort += mEventsObj_OnAbort;
+            
+        }
+
+        public void Unregister()
+        {
+            
+            //mEventsObj.OnUndo -= mEventsObj_OnUndo;
+            //mEventsObj.OnRedo -= mEventsObj_OnRedo;
+            //mEventsObj.OnCommit -= mEventsObj_OnCommit;
+            //mEventsObj.OnDelete -= mEventsObj_OnDelete;
+            //mEventsObj.OnAbort -= mEventsObj_OnAbort;
             
         }
 

@@ -17,19 +17,33 @@ namespace HCMToolsInventorAddIn
 {
     public class ApplicationEventsHandler
     {
-        List<HcmView> _hcmViews = new List<HcmView>();
-
-        public void register()
+        public ApplicationEventsHandler(ApplicationEvents appEvents)
         {
-            Inventor.ApplicationEvents appEvents = AddinGlobal.InventorApp.ApplicationEvents;
-            appEvents.OnDocumentChange += appEvents_OnDocumentChange;
-            appEvents.OnSaveDocument += appEvents_OnSaveDocument;
-            appEvents.OnOpenDocument += appEvents_OnOpenDocument;
-            appEvents.OnNewDocument += appEvents_OnNewDocument;
-            appEvents.OnActivateDocument += appEvents_OnActivateDocument;
+            _appEvents = appEvents;
+        }
+
+        List<HcmView> _hcmViews = new List<HcmView>();
+        private ApplicationEvents _appEvents;
+
+        public void Register()
+        {            
+            _appEvents.OnDocumentChange += appEvents_OnDocumentChange; 
+            _appEvents.OnSaveDocument += appEvents_OnSaveDocument;
+            _appEvents.OnOpenDocument += appEvents_OnOpenDocument;
+            _appEvents.OnNewDocument += appEvents_OnNewDocument;
+            _appEvents.OnActivateDocument += appEvents_OnActivateDocument;
             //appEvents.OnNewEditObject += appEvents_OnNewEditObject;
         }
 
+        public void Unregister()
+        {
+            Inventor.ApplicationEvents appEvents = AddinGlobal.InventorApp.ApplicationEvents;
+            appEvents.OnDocumentChange -= appEvents_OnDocumentChange;
+            appEvents.OnSaveDocument -= appEvents_OnSaveDocument;
+            appEvents.OnOpenDocument -= appEvents_OnOpenDocument;
+            appEvents.OnNewDocument -= appEvents_OnNewDocument;
+            appEvents.OnActivateDocument -= appEvents_OnActivateDocument;
+        }
         void appEvents_OnNewEditObject(object EditObject, EventTimingEnum BeforeOrAfter, NameValueMap Context, out HandlingCodeEnum HandlingCode)
         {
             
@@ -93,7 +107,7 @@ namespace HCMToolsInventorAddIn
                         Sheet oSheet = drawDoc.ActiveSheet;
                         int addedViewIndex = oSheet.DrawingViews.Count;
                         DrawingView addedDrawingView = oSheet.DrawingViews[addedViewIndex];
-                        addedDrawingView.addCustomViewLabel(addedViewIndex);
+                        addedDrawingView.addCustomViewLabel();
                     }
                     catch (Exception ex)
                     {
@@ -112,7 +126,7 @@ namespace HCMToolsInventorAddIn
                         Sheet oSheet = drawDoc.ActiveSheet;
                         int addedViewIndex = oSheet.DrawingViews.Count;
                         DrawingView addedDrawingView = oSheet.DrawingViews[addedViewIndex];
-                        addedDrawingView.addCustomViewLabel(addedViewIndex);
+                        addedDrawingView.addCustomViewLabel();
                         if (addedDrawingView is SectionDrawingView)
                         {
                             SectionDrawingView addedSection = (SectionDrawingView)addedDrawingView;
@@ -138,21 +152,33 @@ namespace HCMToolsInventorAddIn
                     if (doc.ActivatedObject is Sheet)
                     {
                         Sheet ivSheet = (Sheet)doc.ActivatedObject;
-                        foreach (DrawingView dView in ivSheet.DrawingViews)
+                        foreach (DrawingView dView in ivSheet.DrawingViews)  //TODO: Convert loops to linq statements with .Cast
                         {
                             foreach (DrawingView view in dView.Parent.DrawingViews)
                             {
-                                view.updateViewLabel();
+                                var updated = view.updateViewLabel();
+                                if (!updated.Success)
+                                {
+                                    ErrorLog.LogError(updated.Message + " View Label " + dView.Name + doc.DisplayName, doc, trans.DisplayName);
+                                }
                             }
                             if (dView is SectionDrawingView)
                             {
                                 SectionDrawingView sectionView = (SectionDrawingView)dView;
-                                sectionView.updateCalloutSymbol();
+                                var update = sectionView.updateCalloutSymbol();
+                                if (!update.Success)
+                                {
+                                    ErrorLog.LogError(update.Message + " Callout " + sectionView.Name + doc.DisplayName, doc, trans.DisplayName);
+                                }
                             }
                             if (dView is DetailDrawingView)
                             {
                                 DetailDrawingView detailView = (DetailDrawingView)dView;
-                                detailView.updateCalloutSymbol();
+                                var update = detailView.updateCalloutSymbol();
+                                if (!update.Success)
+                                {
+                                    ErrorLog.LogError(update.Message + " Callout " + dView.Name + doc.DisplayName, doc, trans.DisplayName);
+                                }
                             }
                         }
                     }
@@ -166,7 +192,7 @@ namespace HCMToolsInventorAddIn
                         DrawingDocument drawDoc = (DrawingDocument)DocumentObject;
                         Sheet oSheet = drawDoc.ActiveSheet;
                         DrawingView view = oSheet.DrawingViews[oSheet.DrawingViews.Count];
-                        view.addCustomViewLabel(oSheet.DrawingViews.Count);
+                        view.addCustomViewLabel();
                         if (view is SectionDrawingView)
                         {
                             SectionDrawingView addedSection = (SectionDrawingView)view;
@@ -470,7 +496,6 @@ namespace HCMToolsInventorAddIn
         void ApplicationEvents_OnActivateView(Inventor.View ViewObject, EventTimingEnum BeforeOrAfter, NameValueMap Context,
             out HandlingCodeEnum HandlingCode)
         {
-            //MessageBox.Show("OnActivateView");
             HandlingCode = HandlingCodeEnum.kEventHandled;
         }
         

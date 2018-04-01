@@ -843,7 +843,7 @@ namespace HCMToolsInventorAddIn
             return null;
         }
         
-        public static void addCustomViewLabel(this DrawingView drawingView, int index)
+        public static void addCustomViewLabel(this DrawingView drawingView)
         {
             Sheet oSheet = drawingView.Parent;
             DrawingDocument drawingDoc = (DrawingDocument)oSheet.Parent;
@@ -915,16 +915,17 @@ namespace HCMToolsInventorAddIn
             drawingView.ShowLabel = false;
         }
 
-        public static void updateViewLabel(this DrawingView drawingView)
+        public static ActionResult updateViewLabel(this DrawingView drawingView)
         {
             Sheet oSheet = drawingView.Parent;
             DrawingDocument drawDoc = (DrawingDocument)oSheet.Parent;
-            Inventor.Application app = (Inventor.Application)oSheet.Application;
+            //Inventor.Application app = (Inventor.Application)oSheet.Application;
             if (drawingView.ShowLabel)
             {
-                drawingView.addCustomViewLabel(100);
+                drawingView.addCustomViewLabel();
+                return new ActionResult(true); //TODO: update the add custom label method to return result and return that here
             }
-            else if (drawingView.AttributeSets.NameIsUsed["ViewData"]
+            if (drawingView.AttributeSets.NameIsUsed["ViewData"]
                 && drawingView.AttributeSets["ViewData"].NameIsUsed["LabelRefKey"])
             {
                 try
@@ -937,15 +938,20 @@ namespace HCMToolsInventorAddIn
                     Inventor.TextBox viewScaleTextBox = viewLabelSymbol.Definition.Sketch.TextBoxes[3];
                     viewLabelSymbol.SetPromptResultText(viewNameTextBox, drawingView.Name);
                     viewLabelSymbol.SetPromptResultText(viewScaleTextBox, drawingView.ScaleString);
+                    return new ActionResult(true); 
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error updating Label " + ex.Message + " " + ex.StackTrace);
+                    return new ActionResult(ex);
                 }
+            }
+            else
+            {
+                return new ActionResult(false, "No Ref Key Attribute");
             }
         }
 
-        public static void updateCalloutSymbol(this SectionDrawingView oSectionView)
+        public static ActionResult updateCalloutSymbol(this SectionDrawingView oSectionView)
         {
             DrawingView parentView = oSectionView.ParentView;
             Sheet parentSheet = parentView.Parent;
@@ -957,19 +963,31 @@ namespace HCMToolsInventorAddIn
             {
                 byte[] calloutRefKey = (byte[])oSectionView.AttributeSets["ViewData"]["CalloutRefKey"].Value;
                 object matchType = new object();
-                SketchedSymbol calloutSymbol = (SketchedSymbol)parentDoc.ReferenceKeyManager.BindKeyToObject(
-                    ref calloutRefKey, 0, out matchType);
-                Inventor.TextBox viewNameBox = calloutSymbol.Definition.Sketch.TextBoxes[2];
-                Inventor.TextBox pageNumBox = calloutSymbol.Definition.Sketch.TextBoxes[3];
-                int pageNumIndex = oSectionView.Parent.Name.IndexOf(":") + 1;
-                //string itemNum = (string)parentDoc.PropertySets["Inventor User Defined Properties"]["ITEM CODE"].Value;
-                string pageNumber = oSectionView.Parent.Name.Substring(pageNumIndex); //itemNum + "." + oSectionView.Parent.Name.Substring(pageNumIndex);
-                calloutSymbol.SetPromptResultText(viewNameBox, oSectionView.Name);
-                calloutSymbol.SetPromptResultText(pageNumBox, pageNumber);
+                try
+                {
+                    SketchedSymbol calloutSymbol = (SketchedSymbol) parentDoc.ReferenceKeyManager.BindKeyToObject(
+                        ref calloutRefKey, 0, out matchType);
+                    Inventor.TextBox viewNameBox = calloutSymbol.Definition.Sketch.TextBoxes[2];
+                    Inventor.TextBox pageNumBox = calloutSymbol.Definition.Sketch.TextBoxes[3];
+                    int pageNumIndex = oSectionView.Parent.Name.IndexOf(":") + 1;
+                    //string itemNum = (string)parentDoc.PropertySets["Inventor User Defined Properties"]["ITEM CODE"].Value;
+                    string pageNumber =
+                        oSectionView.Parent.Name
+                            .Substring(
+                                pageNumIndex); //itemNum + "." + oSectionView.Parent.Name.Substring(pageNumIndex);
+                    calloutSymbol.SetPromptResultText(viewNameBox, oSectionView.Name);
+                    calloutSymbol.SetPromptResultText(pageNumBox, pageNumber);
+                    return new ActionResult(true);
+                }
+                catch (Exception ex)
+                {
+                    return new ActionResult(ex);
+                }
             }
+            return new ActionResult(false, "No Ref Key Attribute");
         }
 
-        public static void updateCalloutSymbol(this DetailDrawingView oDetailView)
+        public static ActionResult updateCalloutSymbol(this DetailDrawingView oDetailView)
         {
             DrawingView parentView = oDetailView.ParentView;
             Sheet parentSheet = parentView.Parent;
@@ -984,20 +1002,20 @@ namespace HCMToolsInventorAddIn
                     object matchType = new object();
                     SketchedSymbol calloutSymbol = (SketchedSymbol)parentDoc.ReferenceKeyManager.BindKeyToObject(
                         ref calloutRefKey, 0, out matchType);
-                    //MessageBox.Show("CalloutName " + calloutSymbol.Name);
                     Inventor.TextBox viewNameBox = calloutSymbol.Definition.Sketch.TextBoxes[2];
                     Inventor.TextBox pageNumBox = calloutSymbol.Definition.Sketch.TextBoxes[3];
                     int pageNumIndex = oDetailView.Parent.Name.IndexOf(":") + 1;
-                    //string itemNum = (string)parentDoc.PropertySets["Inventor User Defined Properties"]["ITEM CODE"].Value;
-                    string pageNumber = oDetailView.Parent.Name.Substring(pageNumIndex); //itemNum + "." + oDetailView.Parent.Name.Substring(pageNumIndex);
+                    string pageNumber = oDetailView.Parent.Name.Substring(pageNumIndex);
                     calloutSymbol.SetPromptResultText(viewNameBox, oDetailView.Name);
                     calloutSymbol.SetPromptResultText(pageNumBox, pageNumber);
+                    return new ActionResult(true);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Callout Update Error: " + ex.Message + " " + ex.StackTrace);
+                    return new ActionResult(ex);
                 }
             }
+            return new ActionResult(false, "No Ref Key Attribute");
         }
 
         public static void addDetailViewSymbol(this DetailDrawingView newDetail)

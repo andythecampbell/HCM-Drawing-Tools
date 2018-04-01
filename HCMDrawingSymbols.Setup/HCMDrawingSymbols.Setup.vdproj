@@ -15,20 +15,14 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_379DF0F5714042859330E3BC451379B1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4CE3E6C7D89D4579D206D9349E80AAD8"
-        "OwnerKey" = "8:_9B6A5087BC364547B5990E67D2F3A21E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_73084F6FE46841869ABE11A0F64F395C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9B6A5087BC364547B5990E67D2F3A21E"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E7DC2740FDE34CEDB6029C52ABA1F48D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,20 +33,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E7DC2740FDE34CEDB6029C52ABA1F48D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A1FB785DAA80754EC2DBC6778FDC43C2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9B6A5087BC364547B5990E67D2F3A21E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4CE3E6C7D89D4579D206D9349E80AAD8"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -112,6 +100,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
     }
@@ -142,6 +138,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_379DF0F5714042859330E3BC451379B1"
+            {
+            "SourcePath" = "8:..\\HCM_DrawingSymbols\\bin\\Debug\\Autodesk.HcmDrawingSymbols.Inventor.addin"
+            "TargetName" = "8:Autodesk.HcmDrawingSymbols.Inventor.addin"
+            "Tag" = "8:"
+            "Folder" = "8:_D8DE8267D24B4B64B4D5E282771F0A45"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4CE3E6C7D89D4579D206D9349E80AAD8"
             {
             "AssemblyRegister" = "3:1"
@@ -169,59 +185,8 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73084F6FE46841869ABE11A0F64F395C"
-            {
-            "SourcePath" = "8:..\\HCM_DrawingSymbols-2017\\bin\\Debug\\Autodesk.HcmDrawingSymbols.Inventor.addin"
-            "TargetName" = "8:Autodesk.HcmDrawingSymbols.Inventor.addin"
-            "Tag" = "8:"
-            "Folder" = "8:_D8DE8267D24B4B64B4D5E282771F0A45"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9B6A5087BC364547B5990E67D2F3A21E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:HcmDrawingSymbols, Version=1.0.6329.40062, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9B6A5087BC364547B5990E67D2F3A21E"
-                    {
-                    "Name" = "8:HcmDrawingSymbols.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\HCM_DrawingSymbols-2017\\bin\\Debug\\HcmDrawingSymbols.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_94F60C7C6B1B41E78E94489A196DF423"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A1FB785DAA80754EC2DBC6778FDC43C2"
@@ -251,8 +216,39 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E7DC2740FDE34CEDB6029C52ABA1F48D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:HcmDrawingSymbols, Version=1.0.6620.40575, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E7DC2740FDE34CEDB6029C52ABA1F48D"
+                    {
+                    "Name" = "8:HcmDrawingSymbols.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\HCM_DrawingSymbols\\bin\\Debug\\HcmDrawingSymbols.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_94F60C7C6B1B41E78E94489A196DF423"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }

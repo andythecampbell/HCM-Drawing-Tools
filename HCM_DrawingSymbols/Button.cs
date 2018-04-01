@@ -48,38 +48,38 @@ namespace HCMToolsInventorAddIn
 
         #region "Methods"
 
-        public Button(string displayName, string internalName, CommandTypesEnum commandType, string clientId, string description, string tooltip, Icon standardIcon, Icon largeIcon, ButtonDisplayEnum buttonDisplayType)
-        {
-            try
-            {
-                ////get IPictureDisp for icons
-                //stdole.IPictureDisp standardIconIPictureDisp;
-                //standardIconIPictureDisp = (stdole.IPictureDisp)Support.IconToIPicture(standardIcon);
+        //public Button(string displayName, string internalName, CommandTypesEnum commandType, string clientId, string description, string tooltip, Icon standardIcon, Icon largeIcon, ButtonDisplayEnum buttonDisplayType)
+        //{
+        //    try
+        //    {
+        //        //get IPictureDisp for icons
+        //        //IPictureDisp standardIconIPictureDisp;
+        //        //standardIconIPictureDisp = (IPictureDisp)Support.IconToIPicture(standardIcon);
 
-                //stdole.IPictureDisp largeIconIPictureDisp;
-                //largeIconIPictureDisp = (stdole.IPictureDisp)Support.IconToIPicture(largeIcon);
-                ////create button definition
-                //m_buttonDefinition = m_inventorApplication.CommandManager.ControlDefinitions.AddButtonDefinition(displayName, internalName, commandType, clientId, description, tooltip, standardIconIPictureDisp, largeIconIPictureDisp, buttonDisplayType);
+        //        //IPictureDisp largeIconIPictureDisp;
+        //        //largeIconIPictureDisp = (IPictureDisp)Support.IconToIPicture(largeIcon);
+        //        //create button definition
+        //        m_buttonDefinition = m_inventorApplication.CommandManager.ControlDefinitions.AddButtonDefinition(displayName, internalName, commandType, clientId, description, tooltip, null , null, buttonDisplayType);
 
-                ////enable the button
-                //m_buttonDefinition.Enabled = true;
+        //        //enable the button
+        //        m_buttonDefinition.Enabled = true;
 
-                ////connect the button event sink
-                //ButtonDefinition_OnExecuteEventDelegate = new ButtonDefinitionSink_OnExecuteEventHandler(ButtonDefinition_OnExecute);
-                //m_buttonDefinition.OnExecute += ButtonDefinition_OnExecuteEventDelegate;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-        }
+        //        //connect the button event sink
+        //        ButtonDefinition_OnExecuteEventDelegate = new ButtonDefinitionSink_OnExecuteEventHandler(ButtonDefinition_OnExecute);
+        //        m_buttonDefinition.OnExecute += ButtonDefinition_OnExecuteEventDelegate;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        MessageBox.Show(e.ToString());
+        //    }
+        //}
 
         public Button(string displayName, string internalName, CommandTypesEnum commandType, string clientId, string description, string tooltip, ButtonDisplayEnum buttonDisplayType)
         {
             try
             {
                 //create button definition
-                m_buttonDefinition = m_inventorApplication.CommandManager.ControlDefinitions.AddButtonDefinition(displayName, internalName, commandType, clientId, description, tooltip, Type.Missing, Type.Missing, buttonDisplayType);
+                m_buttonDefinition = AddinGlobal.InventorApp.CommandManager.ControlDefinitions.AddButtonDefinition(displayName, internalName, commandType, clientId, description, tooltip, null, null, buttonDisplayType);
 
                 //enable the button
                 m_buttonDefinition.Enabled = true;
@@ -90,7 +90,7 @@ namespace HCMToolsInventorAddIn
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(e.ToString() + e.StackTrace);
             }
         }
 
